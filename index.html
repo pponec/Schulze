@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <!--
 
+
+    -+- Original header -+-
+
     This file is part of VTK Schulze
 
     VTK Schulze is free software: you can redistribute it and/or modify
@@ -19,98 +22,107 @@
 -->
 
 <html lang="en" manifest="app.manifest">
-<!-- version: 2013051602 -->
-<head>
-    <title>Schulze</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <script src="vendor/js/jquery-1.8.2.min.js"></script>
-    
-    <link rel="stylesheet" href="vendor/css/bootstrap.cosmo.font.css"></link>
-    <link rel="stylesheet" href="vendor/css/bootstrap.cosmo.min.css"></link>
-    <link rel="stylesheet" href="css/schulze.css"></link>
-    <link rel="stylesheet" href="vendor/css/bootstrap-responsive.min.css"></link>
-    <script src="vendor/js/bootstrap.min.js"></script>
-    
-    <script src="js/schulze.js"></script>
-    <script src="js/main.js"></script>
-    
-    <script>
-    window._schulze_version = 2013051602;
-    $(window).ready(function() {
-        $('span.version').text(window._schulze_version);
-    });
-    </script>
-</head>
+    <!-- version: 2013051602 -->
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Schulzova metoda</title>
 
-<body style="padding: 1em; height: 100%">
-    <div class="container-fluid" style="height: 100%">
-        <div class="row-fluid">
-            <div class="schulzeheader offset3 span6">
-                Schulze
+        <script src="vendor/js/jquery-1.8.2.min.js"></script>
+
+        <link rel="stylesheet" href="vendor/css/bootstrap.cosmo.font.css" />
+        <link rel="stylesheet" href="vendor/css/bootstrap.cosmo.min.css" />
+        <link rel="stylesheet" href="css/schulze.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="vendor/css/bootstrap-responsive.min.css" />
+        <script src="vendor/js/bootstrap.min.js"></script>
+
+        <script src="js/schulze.js"></script>
+        <script src="js/main.js"></script>
+
+        <script>
+            window._schulze_version = 20161111;
+            $(window).ready(function () {
+                $('span.version').text(window._schulze_version);
+            });
+        </script>
+    </head>
+
+    <body style="padding: 1em; height: 100%">
+        <div class="container-fluid" style="height: 100%">
+            <div class="row-fluid">
+                <div class="schulzeheader offset3 span6">
+                    Schulzova metoda hlasování
+                </div>
             </div>
-        </div>
-        <div class="content row-fluid">
-            <div id="content" class="offset3 span6">
-                <div id="home" class="active">
-                    <p>Start a new online vote.</p>
-                    <button id="start_new_vote" type="submit" class="btn btn-primary">New Vote</button>
-                </div>
-                <div id="new_option" style="display: none; opacity: 0">
-                    <form onsubmit="return false;" class="form-inline">
-                        <fieldset>
-                            <legend>Add a new options</legend>
-                            <ol type="A" class="options"></ol>
-                            <input id="new_option_title" type="text" class="span4" placeholder="Add a new option..." />
-                            <button id="add_new_option" type="submit" class="btn btn-primary">Add</button>
-                            <button id="go_to_voting" type="submit" class="btn">Start Voting</button>
-                        </fieldset>
-                    </form>
-                </div>
-                <div id="new_vote" style="display: none; opacity: 0">
-                    <form onsubmit="return false;" class="form-inline">
-                        <fieldset>
-                            <legend>Add a vote</legend>
-                            <label>Options:</label>
-                            <div class="row-fluid">
-                                <div class="span9">
-                                    <ol type="A" class="options" />
+            <div class="content row-fluid">
+                <div id="content" class="offset3 span6">
+                    <div id="home" class="active">
+                        <p>Hlasování online</p>
+                        <button id="start_new_vote" type="submit" class="btn btn-primary">Nové hlasování</button>
+                    </div>
+                    <div id="new_option" style="display: none; opacity: 0">
+                        <form onsubmit="return false;" class="form-inline">
+                            <fieldset>
+                                <legend>Přidej nabídku</legend>
+                                <ol type="A" class="options"></ol>
+                                <input id="new_option_title" type="text" class="span4" placeholder="Kandidát" />
+                                <button id="add_new_option" type="submit" class="btn btn-primary">Přidat</button>
+                                <button id="go_to_voting" type="submit" class="btn">Začátek hlasování</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div id="new_vote" style="display: none; opacity: 0">
+                        <form onsubmit="return false;" class="form-inline">
+                            <fieldset>
+                                <legend>Přidat volbu</legend>
+                                <label>Volby</label>
+                                <div class="row-fluid">
+                                    <div class="span9">
+                                        <ol type="A" class="options" />
+                                    </div>
+                                    <div class="span3">
+                                        <ol class="optioncount" />
+                                    </div>
                                 </div>
-                                <div class="span3">
-                                    <ol class="optioncount" />
+                                <label>Výsledek:</label>
+                                <div id="current_tmp_result"></div>
+                                <div class="helper-text">Počet hlasů: <span id="nb_votes">0</span></div>
+                                <input id="new_vote_val" type="text" class="span4" placeholder="A-BC-DEF" />
+                                <!--
+                                <textarea id="new_vote_val" rows="10" cols="90" placeholder="A-BC-DEF" wrap="soft" style="width: 200px;"></textarea>
+                                -->
+                                <div style="display: inline-block;">
+                                    <button id="add_new_vote" type="submit" class="btn btn-primary">Přidat</button>
+                                    <button id="undo" class="btn">Vrátit poslední</button>
+                                    <button id="go_to_result" type="submit" class="btn">Zobrazit hlasování</button>
                                 </div>
-                            </div>
-                            <label>Result so far:</label>
-                            <div id="current_tmp_result"></div>
-                            <div class="helper-text">Number of votes: <span id="nb_votes">0</span></div>
-                            <input id="new_vote_val" type="text" class="span4" placeholder="A-BC-DEF" />
-                            <button id="add_new_vote" type="submit" class="btn btn-primary">Add</button>
-                            <button id="undo" class="btn">Undo Last Vote</button>
-                            <!--<button id="go_to_result" type="submit" class="btn">Show result</button>-->
-                        </fieldset>
-                    </form>
+                            </fieldset>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span6 offset3 logheader">
-                <p>Log:</p>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="log offset3 span6">
-                <div id="log_last" style="display: none;">
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="offset3 span6">
-                <div class="powered">
-                    Version <span class="version"></span> <br />
-                    Powered by <a href="//vtk.be">Vlaamse Technische Kring Leuven</a>
+            <div class="row-fluid">
+                <div class="span6 offset3 logheader">
+                    <p>Zprávy:</p>
                 </div>
             </div>
+            <div class="row-fluid">
+                <div class="log offset3 span6">
+                    <div id="log_last" style="display: none;">
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="offset3 span6">
+                        <div class="powered">
+                            Version: <span class="version"></span> <br />
+                            License: <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPL Version 3</a><br />
+                            Based on project: <a href="https://github.com/bgotink/Schulze">Bgotink/Schulze</a> of <a href="https://vtk.be">Vlaamse Technische Kring Leuven</a><br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="schildDisabled" ></span>
         </div>
-    </div>
-    <span class="schild" />
-</body>
+    </body>
 </html>

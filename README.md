@@ -1,4 +1,4 @@
-# An online Schulze voting system.
+# An online Schulze voting system (Czech localization by Ponec)
 
 ## License
 This code is licensed under the GNU General Public License v3.0. 
